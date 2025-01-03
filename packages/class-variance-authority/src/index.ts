@@ -68,7 +68,7 @@ type Props<T> = T extends ConfigSchema
   : ClassProp;
 
 export const cva =
-  <T>(base?: ClassValue, config?: Config<T>) =>
+  <T extends ConfigSchema>(base?: ClassValue, config?: Config<T>) =>
   (props?: Props<T>) => {
     if (config?.variants == null)
       return cx(base, props?.class, props?.className);
@@ -116,7 +116,7 @@ export const cva =
                 {
                   ...defaultVariants,
                   ...propsWithoutUndefined,
-                }[key],
+                }[key] as string, // type: `ClassValue` without undefined
               )
             : {
                 ...defaultVariants,
